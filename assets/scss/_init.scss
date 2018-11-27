@@ -1,0 +1,57 @@
+@import 'variables';
+
+html,:root{
+  width:100%;
+  font-size:15px;
+  background-color:$main2*0.94;
+  font-weight:500;
+}
+body{
+  font-family:$master-font;
+  width:100%;
+  min-width: 375px;
+  letter-spacing: 0.12rem;
+  background-color:$main2*0.94;
+  color:$main1;
+  list-style-position: inside;
+  img{
+    max-width:100%;
+    border:none;
+  }
+  a{
+    color:$main3;
+    border-bottom:0px $main2*0.9;
+    &:hover{
+      text-decoration: none;
+      img{
+        transition: 0.2s ease-out;
+      }
+    }
+  }
+  div,a,img{
+    transition: 0.1s cubic-bezier(0.4, 0.0, 0.2, 1);
+  }
+}
+hr{
+  border-top:1px dotted $main2*0.8;
+}
+h1,h2,h3,h4,h5,h6{
+  font-weight:normal;
+  margin:3rem 0;
+}
+td, th {
+  text-align:left;
+  vertical-align: center;
+  padding:5px;
+  border-width: 1px;
+  border-style: solid;
+}
+sup,sub{
+  vertical-align:baseline;
+}
+sup{
+  margin-right:3px;
+}
+sub{
+  margin-left:3px;
+}

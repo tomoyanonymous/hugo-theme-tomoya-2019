@@ -1,0 +1,15 @@
+{{ define "main" }}
+<div id="inner">
+  <div id="list-wrap">
+    {{range .Resources.Match "img/*"}}
+    {{.RelPermalink}}
+    {{end}}
+test
+    {{ $paginator := .Paginate (where .Data.Pages "Section" .Section) 10 }}
+    {{ range $paginator.Pages }}
+      {{ partial "article-thum.html" .}}
+    {{ end }}
+    {{ partial  "pagination.html" . }}
+    </div>
+    </div>
+{{ end }}

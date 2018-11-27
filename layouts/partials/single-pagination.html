@@ -1,0 +1,35 @@
+<div id="pagination">
+  <div class="to_next">
+
+    <a href="{{ if .NextInSection }}
+    {{.NextInSection.Permalink }}
+    {{ end }}"  {{if not .NextInSection}}class="none"{{ end }}>
+
+        {{ if .NextInSection }}
+      {{.NextInSection.Title}}
+  {{ end }}
+
+
+    </a>
+
+  </div>
+  <div class="to_index">
+
+    <a href="../">≡</a>
+
+  </div>
+  <div class="to_prev">
+
+    <a href="{{ if .PrevInSection }}
+     {{ .PrevInSection.Permalink }}
+    {{ end }}" {{if not .PrevInSection }}class="none"{{ end }}>
+
+
+    {{ if .PrevInSection }}
+    {{ .PrevInSection.Title }}
+    {{ end }}
+
+    </a>
+  </div>
+
+</div>

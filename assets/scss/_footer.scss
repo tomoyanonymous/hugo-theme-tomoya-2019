@@ -1,0 +1,53 @@
+footer{
+  min-width: 375px;
+  background-color: $main1;
+  color:$main2*0.94;
+  padding:30px;
+  a{
+
+  }
+  >div,p{
+    height:auto;
+  }
+  .socials{
+    display: flex;
+    // justify-content: center;
+    >div{
+      margin-right:20px;
+      width:40px;
+      height:40px;
+      div, img{
+      width:40px;
+      height:40px;
+    }
+    img{
+      object-fit: contain;
+    }
+}
+    .tw img{
+      transform: scale(1.05);
+    }
+    .fb img{
+      transform: scale(0.8);
+    }
+    .github img{
+      transform: scale(0.8);
+    }
+
+    .instagram img{
+      filter:invert(100%);
+      transform: scale(0.8);
+    }
+    .vimeo img{
+      transform: scale(0.8);
+    }
+  }
+  .copyrights{
+    display: inline;
+    font-size:0.8rem;
+    a:hover{
+      background-color: $main2;
+      color:$main5;
+    }
+  }
+}

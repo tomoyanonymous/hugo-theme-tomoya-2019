@@ -1,0 +1,9 @@
+
+  <a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
+<article class="thumbnail list">
+  <div class="image"><img src="{{.Site.BaseURL}}{{.Params.ogpimage}}" alt=""></div>
+
+  <div class="summary">{{.Summary| plainify }}</div>
+<p class="title">{{ .Title }}({{.Date.Format "2006-01-01"}})</p>
+</article>
+</a>

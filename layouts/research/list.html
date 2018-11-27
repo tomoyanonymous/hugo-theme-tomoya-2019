@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div id="inner">
+  <div id="list-wrap">
+    {{$categories := (slice "thesis" "journals" "proceedings")}}
+    {{$pages := .Pages}}
+    {{range $categories}}
+      {{$mypages := (where $pages ".Params.category" .)}}
+      {{ if (len $mypages) gt 0}}
+          <h1>{{humanize .}}</h1>
+          {{range $mypages}}
+            {{ partial "article-thum.html" .}}
+          {{end}}
+      {{end}}
+    {{end}}
+
+    {{$others := (where $pages ".Params.category" "not in" $categories)}}
+    {{ if (len $others) gt 0}}
+    <h1>Others</h1>
+      {{range $others}}
+        {{ partial "article-thum.html" .}}
+      {{end}}
+    {{end}}
+    </div>
+    </div>
+{{ end }}

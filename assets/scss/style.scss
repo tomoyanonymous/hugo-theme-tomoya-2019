@@ -1,0 +1,308 @@
+@import 'sanitize';
+// end sanitize
+@import 'variables';
+@import 'fontsize';
+@import 'init';
+:root {
+  font-size: 15px;
+}
+@import 'headermenu';
+@import 'footer';
+body{
+  width:100%;
+  #outer{
+    width:100%;
+    max-width:100%;
+
+
+  a.article-header{
+
+    display: block;
+    position: relative;
+    div{
+      max-height:600px;
+      width: 100%;
+      overflow-y: hidden;
+      img{
+        max-height:600px;
+        width:100%;
+        object-fit: cover;
+      }
+    }
+    p{
+      font-size:2rem;
+      width:100%;
+      height:100px;
+      margin:0 auto;
+      padding:0 30px;
+      position: absolute;
+      bottom: 0;
+      span.blurbox{
+        position: absolute;
+        overflow: hidden;
+        left:0;
+        bottom: 0;
+        width: 100%;
+        margin:0 auto;
+        background: linear-gradient(to right,rgba(225, 234, 237,255) 30%, rgba(225, 234, 237,0) 90%);
+        span{
+          display: block;
+          padding:10px;
+        }
+      }
+      span.titlestring{
+        position: absolute;
+        padding:10px;
+        left:0;
+        bottom: 0;
+        width: 100%;
+        margin:0 auto;
+        color:$main4;
+        &:hover{
+          color:$main4;
+        }
+      }
+    }
+  }
+  a article.list {
+    // padding:30px;
+    max-width:1000px;
+    height:120px;
+    overflow-y: hidden;
+    margin:12px auto;
+    position: relative;
+    border-top:1px dotted $main2*0.8;
+    border-bottom:1px dotted $main2*0.8;
+
+    // background-color: $main1;
+    p{
+      position: absolute;
+      width: 100%;
+      bottom:0;
+      left:0;
+      font-size:1.5em;
+      background:linear-gradient(90deg,rgba(225, 234, 237,255) 30%, rgba(225, 234, 237,0) 80%);
+    }
+    .image{
+      position: absolute;
+      right:0;
+      width:100%;
+      height:120px;
+      img{
+      width:100%;
+      height:120px;
+      object-fit: cover;
+      filter:blur(2px);
+    }
+    }
+    .summary{
+      font-size:1rem;
+      line-height:210%;
+      letter-spacing: 0.7em;
+      position: absolute;
+      height:120px;
+      width: 100%;
+      top:0;
+      // background-color: rgba(125,125,125,0.15);
+    }
+
+    }
+  #list-wrap>a:hover{
+      color: $main5;
+      p.title{
+        background:linear-gradient(to right,$main1 30%, rgba(225, 234, 237,0) 80%);
+      }
+  }
+  #inner{
+  .markdown{
+    max-width: 700px;
+    margin:0px auto;
+    padding:60px 30px;
+    font-size: 1rem;
+    line-height: 190%;
+    p{
+      margin:3rem 0;
+      em{
+        display: block;
+        font-size:0.9rem;
+        color:$main1+#222;
+        margin-bottom :-15px;
+      }
+      a:hover{
+        background-color: $main1;
+        color:$main5;
+      }
+    }
+    p#bibtex{
+      font-family:"Lucida Console", Monaco, monospace;
+      font-size:0.6rem;
+      line-height: 170%;
+      letter-spacing:0;
+    }
+    a{
+
+      img:hover{
+        transform: scale(1.02);
+      }
+    }
+  }
+}
+#inner #list-wrap,#inner.flex{
+  // max-width:960+2*3px;
+  min-width:370px;
+  padding:30px 30px;
+  margin: 0 auto;
+}
+.categories,.tags{
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  // max-width:100%;
+}
+#switchtoart,#switchtoclient,.tagselect{
+  display: none;
+}
+.switchtoart-label,.switchtoclient-label,.tagselect-label{
+  font-size: 0.7rem;
+  color:$main1;
+  letter-spacing: 0.1em;
+  margin:2.5px;
+  cursor: pointer;
+}
+#switchtoart:checked~ .switchtoart-label,#switchtoclient:checked~ .switchtoclient-label{
+  background-color: $main1;
+  color:$main5;
+}
+#inner.flex{
+  display:flex;
+margin:0 auto;
+  flex-wrap: wrap;
+
+  a article.thumbnail {
+    width:300px;
+    height:300px;
+    position:relative;
+    margin-bottom:2px;
+
+    img{
+      width:300px;
+      height:300px;
+      object-fit: cover;
+    }
+  }
+
+  a article.bigthumbnail{
+    width:602px;
+    height:602px;
+    img{
+      width:602px;
+      height:602px;
+    }
+  }
+  a article p.title{
+    width: 100%;
+    position: absolute;
+    bottom:0px;
+    left:0px;
+    padding:5px;
+    background:linear-gradient(90deg,rgba(225, 234, 237,255) 30%, rgba(225, 234, 237,0) 80%);
+  }
+  a article.thumbnail:hover p.title{
+      background:linear-gradient(to right,$main1 30%, rgba(225, 234, 237,0) 80%);
+      color:$main5;
+  }
+  @media (max-width: 660px) {
+    a article.thumbnail{
+      width:150px;
+      height:150px;
+      font-size: 0.8rem;
+      p.title{
+        background:linear-gradient(to right,$main1 30%, rgba(225, 234, 237,0) 80%);
+      }
+      img{
+        width:150px;
+        height:150px;
+      }
+    }
+    a article.bigthumbnail{
+      width:302px;
+      height:302px;
+      img{
+        width:302px;
+        height:302px;
+      }
+    }
+  }
+
+}
+
+}
+
+
+#pagination{
+  max-width:700px;
+  padding:0 30px;
+  min-width:350px;
+  height:50px;
+  display: flex;
+  justify-content: center;
+  margin:0 auto;
+  margin-bottom: 30px;
+  position: relative;
+  >div{
+    height:100%;
+    a:hover{
+      background-color: $main1;
+      color:$main5;
+    }
+    a,span,.number{
+      display: block;
+      width:45px;
+      padding:10px;
+      margin:3px 0;
+      text-align: center;
+    }
+  }
+  .to_next ,.to_prev{
+    width:40%;
+    height:100%;
+    // min-width: 240px;
+    a{
+      width:100%;
+      height:100%;
+    }
+  }
+  .to_next .none,.to_prev .none{
+    pointer-events: none;
+  }
+
+  .to_next{
+    position: absolute;
+    left: 30px;
+    border-left: 1px dotted $main1;
+  }
+  .to_prev{
+    position: absolute;
+    right: 30px;
+    border-right: 1px dotted $main1;
+  }
+  .to_index{
+    width:70px;
+    height:100%;
+    padding:0 10px;
+    position: absolute;
+    left: 50%;
+    vertical-align: middle;
+    margin-left: -35px;
+    a{
+      display: inline;
+      height: 100%;
+      width: 50px;
+      font-size: 3rem;
+      line-height: 3rem;
+      margin:0;
+      padding: 0;
+    }
+  }
+}
+}

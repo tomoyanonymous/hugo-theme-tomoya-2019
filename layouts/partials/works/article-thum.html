@@ -1,0 +1,7 @@
+
+  <a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
+<article class="thumbnail{{if eq .Params.bigthum true}} bigthumbnail{{else}} smallthumbnail{{end}}">
+<p class="title">{{ .Title }}({{.Date.Format "2006"}})</p>
+<div class="image"><img src="{{.Site.BaseURL}}{{.Params.thum}}" alt=""></div>
+</article>
+</a>

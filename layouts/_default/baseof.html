@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="{{.Lang}}" prefix="og: http://ogp.me/ns#">
+
+{{ block "head" .}}
+  <head>
+  {{ $sass := resources.Get "scss/style.scss" }}
+  {{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
+  {{ $style := $sass | resources.ToCSS $options }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  {{ partial "meta.html" . }}
+  <title>{{if .Title}}{{ .Title }} - {{end}}Matsuura Tomoya|松浦知也</title>
+</head>
+{{ end }}
+
+<body>
+{{ partialCached "tagmanager.html" . }}
+  <div id="outer">
+
+    {{ partialCached "header.html" . }}
+    {{ block "main" . }}
+    {{ end }}
+    {{ partialCached  "footer.html" . }}
+  </div>
+</body>
+</html>

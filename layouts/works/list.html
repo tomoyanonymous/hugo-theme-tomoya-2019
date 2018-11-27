@@ -1,0 +1,121 @@
+{{ define "main" }}
+<div class="categories">
+<input type="checkbox" id="switchtoart" name="artworks" checked>
+<label for="switchtoart" class="switchtoart-label">ARTWORKS</label>
+<input type="checkbox" id="switchtoclient" name="clientworks">
+<label for="switchtoclient" class="switchtoclient-label">CLIENTWORKS</label>
+</div>
+<div class="tags">
+{{ range $name, $taxonomy := .Site.Taxonomies.tags }}
+<input type="checkbox" class ="tagselect" id="tag-{{$name}}" checked>
+<label for="tag-{{$name}}" class ="tagselect-label" data-tagname="{{$name}}" >#{{$name|upper}}</label>
+<style>
+  input#tag-{{$name}}:checked ~ label[data-tagname='{{$name}}']{
+    background-color:#06262B;
+    color:#02B2D4;
+  }
+</style>
+{{end}}
+</div>
+<div id="inner" class = "flex">
+
+    {{ range .Pages }}
+      {{ partial "works/article-thum.html" .}}
+    {{ end }}
+  </div>
+  {{$masonry := resources.Get "/js/masonry.pkgd.js"}}
+    <script src="{{$masonry.Permalink}}"></script>
+    <script type="text/javascript">
+
+    var container = document.querySelector('#inner');
+    var selector_art = '#inner>a.masonryelem[data-category="artwork"]';
+    var elem_art =document.querySelectorAll(selector_art);
+    var selector_clientwork = '#inner>a.masonryelem[data-category="clientwork"]';
+    var elem_clientwork =document.querySelectorAll(selector_clientwork);
+    var elem_whole = document.querySelectorAll("#inner>a.masonryelem");
+    var transisiontime = 100;
+    var msnry = new Masonry( container, {
+  // itemSelector: '#inner>a.masonryelem',
+  columnWidth: 'a article.smallthumbnail',
+  gutter: 2,
+  stagger: 30,
+  transitionDuration:'0.2s',
+  horizontalOrder: false,
+  fitWidth: true
+  // initLayout: false
+  });
+  var current_category="artwork";
+  var current_tags=[];
+  var tagbuttons = document.querySelectorAll('label.tagselect-label');
+  tagbuttons.forEach(function(but){
+    current_tags.push(but.dataset.tagname);
+  });
+  var searchtags = function(searchtags,tags){
+    var res = tags.filter(item => searchtags.includes(item));
+    return res.length>0;
+  }
+  var switchmode = function(newcategory,newtags){
+    var append_elems=[],remain_elems=[],deleting_elems=[];
+    elem_whole.forEach(function(el) {
+      var _tags = el.dataset.tags.split(' ');
+      var _category =  el.dataset.category || "artwork";//default:artwork
+      var cur_res = searchtags(current_tags,_tags)&&(_category==current_category);
+      var new_res = searchtags(newtags,_tags)&&(_category==newcategory);
+      if(cur_res&&new_res){
+        remain_elems.push(el);
+      }else if(!cur_res&&new_res){
+        append_elems.push(el);
+      }else if((cur_res&& !new_res)|| _tags.length<=1){
+        deleting_elems.push(el);
+      }
+    });
+    if(append_elems.length>0){
+    append_elems.forEach(function(el){
+      container.appendChild(el);
+    });
+  }
+  console.log(append_elems.length,deleting_elems.length,remain_elems.length);
+    msnry.appended(append_elems);
+    msnry.reloadItems();
+    msnry.remove(deleting_elems);
+    setTimeout(function() {
+      msnry.reloadItems();
+    },500);
+    setTimeout(function(){
+      msnry.layout();
+    },500);
+
+  }
+
+  var artbutton = document.querySelector('#switchtoart');
+  artbutton.addEventListener("change",function(e){
+    clientbutton.checked = !artbutton.checked;
+    var new_category=(artbutton.checked)? "artwork":"clientwork";
+    switchmode(new_category,current_tags);
+    current_category=new_category;
+  });
+  var clientbutton = document.querySelector('#switchtoclient');
+  clientbutton.addEventListener("change",function(e){
+    artbutton.checked = !clientbutton.checked;
+    var new_category=(artbutton.checked)? "artwork":"clientwork";
+    switchmode(new_category,current_tags);
+    current_category=new_category;
+  });
+  // var tagbuttons = document.querySelectorAll('input.tagselect');
+  tagbuttons.forEach(function(but){
+    but.addEventListener('change',function(e){
+      var newtags = current_tags.slice();
+      if(e.target.checked){
+      newtags.push(e.target.name);
+    }else{
+        newtags = newtags.filter(item => item != e.target.name);
+      }
+      console.log(newtags);
+      switchmode(current_category,newtags);
+      current_tags=newtags;
+    });
+  });
+  switchmode(current_category,current_tags);
+
+    </script>
+{{ end }}

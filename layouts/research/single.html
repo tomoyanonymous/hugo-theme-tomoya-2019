@@ -1,0 +1,32 @@
+{{define "head"}}
+<head>
+{{ $sass := resources.Get "scss/style.scss" }}
+{{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
+{{ $style := $sass | resources.ToCSS $options }}
+<link rel="stylesheet" href="{{ $style.Permalink }}">
+{{ partial "meta.html" . }}
+{{ partial "research-meta.html" .}}
+<title>{{if .Title}}{{ .Title }} - {{end}}Matsuura Tomoya|松浦知也</title>
+</head>
+{{end}}
+
+
+{{ define "main" }}
+<div id="inner">
+{{ partial "article-header.html" .}}
+<div class="markdown">
+
+{{.Content}}
+<h1>Authors</h1>
+{{delimit .Params.authors ", "}}
+
+
+{{ with .Params.bibtex }}
+<h1>Bibtex</h1>
+<p id="bibtex"><em>{{.}}</em></p>
+{{end}}
+
+</div>
+{{ partial "single-pagination.html" .}}
+</div>
+{{ end }}

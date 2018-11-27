@@ -1,0 +1,14 @@
+{{$src := ((.Get "src") or (.Get 0))}}
+
+{{$img := .Page.Resources.GetMatch $src}}
+{{$thumbnail := $img.resize "640x smart" }}
+{{ if .IsNamedParams }}
+
+<a href="{{.Get "src" }}">
+  <img src="{{ $thumbnail.RelPermalink }}" {{ with .Get "alt" }} alt="{{.}}"{{end}}>
+</a>
+{{ else }}
+<a href="{{.Get 0}}">
+  <img src="{{ $thumbnail.RelPermalink }}" {{ with .Get "alt" }} alt="{{.}}"{{end}}>
+</a>
+{{ end }}
