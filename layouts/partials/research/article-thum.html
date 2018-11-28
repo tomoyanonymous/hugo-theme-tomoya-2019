@@ -2,8 +2,12 @@
   <a href="{{.Permalink}}" class = "research-article" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
 <article class="thumbnail list">
   <div class="image"><img src="{{.Site.BaseURL}}{{.Params.ogpimage}}" alt=""></div>
-
-  <div class="summary">{{.Summary| plainify }}</div>
-<p class="title">{{ .Title }}({{.Date.Format "2006-01-01"}})</p>
+  <p class="title">{{ .Title }}</p>
+  <p class="authors">{{delimit .Params.authors ", "}}</p>
+  <p class="journal">{{.Params.journal_title}}</p>
+  <p class="publishdate">{{.PublishDate.Format "2006-01-01"}}
+    {{if (eq .Params.reviewed true)}}<span class="reviewed">Reviewed</span>{{end}}
+    {{if .Params.pdf_url}}<span class="pdf">PDF</span>{{end}}
+  </p>
 </article>
 </a>

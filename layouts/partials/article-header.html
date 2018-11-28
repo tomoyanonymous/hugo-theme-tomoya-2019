@@ -1,12 +1,21 @@
-<a href="{{.Params.thum}}" class="image article-header">
+{{$header:=""}}
+{{with .Params.ogpimage}}
+{{$header = .}}
+{{end}}
+{{with .Params.thum}}
+{{$header = .}}
+{{end}}
+<a href="{{$header}}" class="image article-header blog">
   <div>
-    <img src="{{.Params.thum}}" alt="">
+    <img src="{{$header}}" alt="">
   </div>
-  <p class="title">
+  <p class="title {{if not $header}}noimage{{end}}">
     <span class="blurbox">
       <span>{{ .Title }}</span>
     </span>
-
     <span class="titlestring">{{ .Title }}</span>
-    </p>
+  </p>
+
 </a>
+<p class="publishdate"><span class="align">publish</span> : {{.Date.Format "2006-01-02"}}</p>
+<p class="lastmoddate"><span class="align">last update</span> : {{.Lastmod.Format "2006-01-02"}} </p>

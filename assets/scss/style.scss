@@ -64,6 +64,30 @@ body{
       }
     }
   }
+ a.article-header p.title.noimage{
+   .blurbox{
+     display: none;
+   }
+   position: relative;
+   max-width: 700px;
+   padding:0;
+   margin:0 auto;
+   .titlestring{
+     padding:0 30px;
+
+   }
+ }
+  .publishdate,.lastmoddate{
+    position: relative;
+    font-size:0.8rem;
+    max-width: 700px;
+    padding:0 30px;
+    margin: 0 auto;
+    span.align{
+      display: inline-block;
+      min-width:85px;
+    }
+  }
   a article.list {
     // padding:30px;
     max-width:1000px;
@@ -106,7 +130,10 @@ body{
       // background-color: rgba(125,125,125,0.15);
     }
 
-    }
+  }
+
+  @import "research_article_list";
+
   #list-wrap>a:hover{
       color: $main5;
       p.title{
@@ -131,6 +158,18 @@ body{
       a:hover{
         background-color: $main1;
         color:$main5;
+      }
+      a.photo-container:hover{
+        background:transparent;
+      }
+    }
+    ul,ol{
+      font-size: 1rem;
+      list-style-position: outside;
+      margin-left: 1.5em;
+      li{
+        margin-bottom:0.5em;
+        line-height:1.35em;
       }
     }
     p#bibtex{

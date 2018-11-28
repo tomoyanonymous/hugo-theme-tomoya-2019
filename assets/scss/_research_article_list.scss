@@ -1,0 +1,45 @@
+a.research-article{
+  article.thumbnail.list{
+    height:auto;
+    p.publishdate{
+      margin:8px 0;
+      padding:0;
+    }
+    p{
+      position: relative;
+      font-size: 0.8rem;
+      margin:4px 0;
+
+    }
+    p.title{
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    span.reviewed,span.pdf{
+      border:1px solid $main3;
+      padding:2px 5px;
+      margin-left:10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+  }
+
+}
+a.research-article:hover {
+article.thumbnail.list{
+  span.reviewed,span.pdf{
+    border:1px solid $main5;
+
+  }
+}
+}
+#list-wrap>h1{
+  max-width:1000px;
+  margin:0 auto;
+}
+#list-wrap p.category{
+  max-width:1000px;
+  margin:0 auto;
+  font-size:1.5rem;
+}

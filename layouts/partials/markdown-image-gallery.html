@@ -2,14 +2,18 @@
 {{$page :=.Page }}
 {{with .Resources.ByType "image"}}
   {{range .}}
+  {{if (and (ne .MediaType.SubType "gif") (ne .MediaType.SubType "svg") )}}
   {{$scratch.Set "ipath" "content/"}}
 
   {{$scratch.Add "ipath" $page.File.Dir}}
 
   {{$scratch.Add "ipath" .Name}}
+  {{if (fileExists ($scratch.Get "ipath")) }}
   {{$iconfig := (imageConfig ($scratch.Get "ipath"))}}
   {{$thum := .Resize "640x" }}
   {{$scratch.Add "imagedata" (slice (dict  "src" .RelPermalink "w" $iconfig.Width "h" $iconfig.Height "msrc" $thum.RelPermalink ))}}
+  {{end}}
+  {{end}}
   {{end}}
 {{end}}
 
@@ -19,11 +23,15 @@ var photos = document.querySelectorAll('.markdown>p>img');
 var items = {{$scratch.Get "imagedata"}};;
 var isphotoloaded = false;
 var garelly;
-photos.forEach(function(photo){
-photo.setAttribute("style","display:none;");
-photo.setAttribute("data-src",photo.getAttribute("src"));
-});
 
+photos.forEach(function(photo){
+photo.setAttribute("data-src",photo.getAttribute("src"));
+if(photo.src.split(".").pop() != "svg" && photo.src.split(".").pop() != "gif"){
+photo.setAttribute("style","display:none;");
+photo.setAttribute("src","about:blank");//prevent from loading
+}
+
+});
 
 var updateattributes = function(dom,attributes){
   attributes.forEach(function(att){
@@ -35,7 +43,7 @@ var initgallery = function(photos,items){
   var pid = 0;
   var works_header = document.querySelector('a.image.article-header');
   var header_image = works_header.querySelector('div img');
-  if(works_header&&header_image){
+  if(works_header&&header_image&&items){
     var myitem =items.filter(item=> item.src.split("/").pop()==header_image.src.split("/").pop())[0];
     if(myitem){
     myitem.index=pid;
@@ -54,7 +62,9 @@ var initgallery = function(photos,items){
       {key:'class',val:'photo-container'},
       {key:'data-gallery-index',val:pid}
     ]);
+    if(items){
     var myitem = items.filter(item=> item.src.split("/").pop()==photofile.split("/").pop())[0];
+  }
     if(myitem){
     myitem.index = pid;
     var thumfile =myitem.msrc;
@@ -69,14 +79,15 @@ var initgallery = function(photos,items){
     anch.appendChild(thumimg);
     photo.parentElement.insertBefore(anch,photo);
     // photo.parentElement.removeChild(photo);
-    photo.setAttribute("src","about:blank");//prevent from loading
     }
   });
+  if(items){
   items = items.filter(item=>(item.index>=0));
   items.sort(function(a,b){
     return a.index - b.index;
   });
-  if(works_header&&header_image){
+  }
+  if(works_header&&header_image&&items){
     works_header.items = items;
   }
   return items;

@@ -1,3 +1,20 @@
+{{ define "head" }}
+  <head>
+  {{ $sass := resources.Get "scss/style.scss" }}
+  {{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
+  {{ $style := $sass | resources.ToCSS $options }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  {{ partialCached "photoswipe-head.html" .}}
+  {{if .Params.highlight}}
+  <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+  {{end}}
+  {{ partial "meta.html" . }}
+  <title>{{if .Title}}{{ .Title }} | {{end}}Matsuura Tomoya|松浦知也</title>
+</head>
+{{ end }}
+
 {{ define "main" }}
 <div id="inner">
 {{ partial "article-header.html" .}}
@@ -5,4 +22,8 @@
 {{ partial "single-profile.html" .}}
 {{ partial "single-pagination.html" .}}
 </div>
+
+{{ partialCached "photoswipe-template.html" .}}
+{{ partial "markdown-image-gallery.html" .}}
+
 {{ end }}

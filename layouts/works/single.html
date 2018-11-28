@@ -4,20 +4,7 @@
   {{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
   {{ $style := $sass | resources.ToCSS $options }}
   <link rel="stylesheet" href="{{ $style.Permalink }}">
-
-  {{$photoswipecss := resources.Get "photoswipe/photoswipe.css"}}
-  <link rel="stylesheet" href="{{$photoswipecss.Permalink}}">
- {{$photoswipeskin := resources.Get "photoswipe/default-skin/default-skin.css"}}
- {{$photoswipesimg := resources.Get "photoswipe/default-skin/default-skin.png"}}
- {{$photoswipesimg2 := resources.Get "photoswipe/default-skin/default-skin.svg"}}
- {{$photoswipesimg3 := resources.Get "photoswipe/default-skin/preloader.gif"}}
-
-<!-- for publish asset images {{$photoswipesimg.Permalink }}{{$photoswipesimg2.Permalink }}{{$photoswipesimg3.Permalink }}-->
-  <link rel="stylesheet" href="{{$photoswipeskin.Permalink}}">
-  {{$photoswipe := resources.Get "photoswipe/photoswipe.js"}}
-  <script src="{{ $photoswipe.Permalink }}"></script>
-  {{$photoswipeui := resources.Get "photoswipe/photoswipe-ui-default.min.js"}}
-  <script src="{{ $photoswipeui.Permalink }}"></script>
+  {{ partialCached "photoswipe-head.html" .}}
 
   {{ partial "meta.html" . }}
   <title>{{if .Title}}{{ .Title }} | {{end}}Matsuura Tomoya|松浦知也</title>
@@ -27,13 +14,13 @@
 
 {{ define "main" }}
 <div id="inner">
-{{partial "article-header.html" .}}
+{{partial "works/article-header.html" .}}
 {{ partial "single-content.html" .}}
 {{ partial "single-pagination.html" .}}
 
 </div>
 
 {{ partial "photoswipe-template.html" .}}
-{{partial "markdown-image-gallery.html" .}}
+{{ partialCached "markdown-image-gallery.html" .}}
 
 {{ end }}
