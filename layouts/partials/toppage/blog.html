@@ -1,1 +1,30 @@
-<div id="blog"></div>
+<div id="blog">
+  <a href="{{"blog"|relLangURL}}"><p class="index hover-invert">blog</p></a>
+  {{range first 10 (where .Site.Pages "Section" "blog")}}
+  <a href="{{.RelPermalink}}" class="hover-invert">
+
+  <div class="blogarticle hover-invert">
+    <div class="infolist">
+      <p class="datetitle">{{.Date.Format "2006-01-02"}} : {{.Title}}</p>
+      <p class="summary">{{.Summary|plainify}}</p>
+    </div>
+    <div class="image">
+      {{if (isset .Params "ogpimage")}}
+      {{$img := (.Resources.GetMatch .Params.ogpimage )}}
+      <img src="{{($img.Fill "150x150").RelPermalink}}" alt="">
+      {{else}}
+      <img src="" alt="">
+      {{end}}
+    </div>
+  </div>
+</a>
+
+  {{end}}
+
+</div>
+
+<p class="linkbutton">
+<a id="toprofile"  href='{{"blog" |relLangURL}}'>
+  <span class= "hover-invert">See more articles</span>
+</a>
+</p>

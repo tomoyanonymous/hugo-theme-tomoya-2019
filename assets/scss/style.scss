@@ -133,7 +133,10 @@ body{
   }
 
   @import "research_article_list";
-
+ .hover-invert:hover{
+  background-color: $main1;
+  color:$main5;
+}
   #list-wrap>a:hover{
       color: $main5;
       p.title{
@@ -186,7 +189,7 @@ body{
     }
   }
 }
-#inner #list-wrap,#inner.flex{
+#inner #list-wrap,#inner.flex, #gallery{
   // max-width:960+2*3px;
   min-width:370px;
   padding:30px 30px;
@@ -212,9 +215,10 @@ body{
   background-color: $main1;
   color:$main5;
 }
-#inner.flex{
+
+#inner.flex,#gallery{
   display:flex;
-margin:0 auto;
+  margin:0 auto;
   flex-wrap: wrap;
 
   a article.thumbnail {
@@ -273,8 +277,112 @@ margin:0 auto;
     }
   }
 
-}
+  }
+  #gallery-wrap{
+    margin-bottom:30px;
+    max-height: 300px;
+    overflow-y: hidden;
+  }
+  #gallery{
 
+    a article.thumbnail{
+      width:150px;
+      height:150px;
+      img{
+        width:150px;
+        height:150px;
+        object-fit: cover;
+      }
+    }
+    a article.bigthumbnail{
+      width:302px;
+      height:302px;
+      img{
+        width:302px;
+        height:302px;
+        object-fit: cover;
+      }
+    }
+    a article p.title{
+      display:none;
+    }
+  }
+  p.linkbutton{
+    text-align: center;
+  }
+  a#toworks,a#toprofile{
+    // width:100%;
+    display: inline-block;
+    margin:10px auto 30px;
+    padding:10px;
+    span{
+    border:1px solid $main3;
+    // border-radius: 10px;
+    padding:7px 10px;
+  }
+
+  }
+  #gallery,#news,#profile,#blog{
+    padding: 0 30px;
+    margin:0 auto;
+    margin-bottom: 30px;
+    p.index{
+      font-size:1.5rem;
+    }
+  }
+  #news,#profile,#blog{
+    max-width:1000px;
+    font-size: 1rem;
+  }
+  #profile{
+    a{
+      display: flex;
+      align-items: center;
+
+    }
+    div.icon{
+      min-width:150px;
+      min-height:150px;
+      margin-right: 10px;
+      img{
+        min-width:150px;
+        min-height:150px;
+        object-fit: cover;
+      }
+    }
+    div.text{
+      max-width:1000-60-150px;
+    }
+  }
+  #news{
+    box-sizing: border-box;
+  }
+  #blog{
+    .blogarticle{
+      height:100px;
+      display:flex;
+      overflow-y: hidden;
+      .infolist{
+        max-width:1000-60-100px;
+        .summary{
+          font-size:0.8rem;
+        }
+      }
+      div.image{
+        min-width:100px;
+        height:100px;
+      }
+      img{
+        width:100px;
+        height:100px;
+        object-fit: cover;
+      }
+    }
+
+  }
+  p.infolist,.blogarticle{
+    border-bottom: 1px dotted $main1;
+  }
 }
 
 

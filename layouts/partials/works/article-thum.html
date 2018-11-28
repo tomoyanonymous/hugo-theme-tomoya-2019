@@ -1,12 +1,11 @@
-
-  <a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
-<article class="thumbnail{{if eq .Params.bigthum true}} bigthumbnail{{else}} smallthumbnail{{end}}">
-<p class="title">{{ .Title }}({{.Date.Format "2006"}})</p>
-{{if (.Resources.GetMatch .Params.thum)}}
-{{$thum := (.Resources.GetMatch .Params.thum).Fill "600x600 Center" }}
-<div class="image"><img src="{{$thum.Permalink}}" alt=""></div>
-{{else}}
-<div class="image"><img src="{{.Params.thum}}" alt=""></div>
-{{end}}
-</article>
+<a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
+  <article class="thumbnail{{if eq .Params.bigthum true}} bigthumbnail{{else}} smallthumbnail{{end}}">
+  <p class="title">{{ .Title }}({{.Date.Format "2006"}})</p>
+  {{if (.Resources.GetMatch .Params.thum)}}
+  {{$thum := (.Resources.GetMatch .Params.thum).Fill "600x600 Center" }}
+  <div class="image"><img src="{{$thum.Permalink}}" alt=""></div>
+  {{else}}
+  <div class="image"><img src="{{.Params.thum}}" alt=""></div>
+  {{end}}
+  </article>
 </a>

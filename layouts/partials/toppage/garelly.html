@@ -1,1 +1,31 @@
-<div id="garelly"></div>
+  <div id="gallery-wrap">
+      <div id="gallery">
+        {{ range  first 8 (where .Data.Pages "Section" "works" ) }}
+          {{partial "works/article-thum.html" .}}
+        {{ end }}
+      </div>
+  </div>
+  <p class="linkbutton">
+  <a id="toworks"  href='{{"works" |relLangURL}}'>
+    <span class= "hover-invert">See more works</span>
+  </a>
+</p>
+{{$masonry := resources.Get "/js/masonry.pkgd.js"}}
+  <script src="{{$masonry.Permalink}}"></script>
+  <script type="text/javascript">
+  var container = document.querySelector('#gallery');
+  var selector = '#inner>a.masonryelem';
+
+  var elem_whole = document.querySelectorAll("#inner>a.masonryelem");
+  var transisiontime = 100;
+  var msnry = new Masonry( container, {
+itemSelector: 'a.masonryelem',
+columnWidth: 'a article.smallthumbnail',
+gutter: 2,
+stagger: 30,
+transitionDuration:'0.2s',
+horizontalOrder: false,
+fitWidth: true
+// initLayout: false
+});
+  </script>
