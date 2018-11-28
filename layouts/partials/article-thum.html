@@ -1,8 +1,14 @@
 
   <a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
 <article class="thumbnail list">
-  <div class="image"><img src="{{.Site.BaseURL}}{{.Params.ogpimage}}" alt=""></div>
+  {{if (isset .Params "thum")}}
+    <div class="image"><img src="{{((.Resources.GetMatch .Params.thum).Resize "800x").Permalink}}" alt=""></div>
+  {{else if (isset .Params "ogpimage")}}
+  <div class="image"><img src="{{((.Resources.GetMatch .Params.ogpimage).Resize "800x").Permalink}}" alt=""></div>
+{{else}}
+<div class="image"><img src="" alt=""></div>
 
+{{end}}
   <div class="summary">{{.Summary| plainify }}</div>
 <p class="title">{{ .Title }}({{.Date.Format "2006-01-01"}})</p>
 </article>

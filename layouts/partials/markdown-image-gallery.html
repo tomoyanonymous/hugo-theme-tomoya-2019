@@ -1,7 +1,22 @@
+{{$scratch := newScratch}}
+{{$page :=.Page }}
+{{with .Resources.ByType "image"}}
+  {{range .}}
+  {{$scratch.Set "ipath" "content/"}}
+
+  {{$scratch.Add "ipath" $page.File.Dir}}
+
+  {{$scratch.Add "ipath" .Name}}
+  {{$iconfig := (imageConfig ($scratch.Get "ipath"))}}
+  {{$thum := .Resize "640x" }}
+  {{$scratch.Add "imagedata" (slice (dict  "src" .RelPermalink "w" $iconfig.Width "h" $iconfig.Height "msrc" $thum.RelPermalink ))}}
+  {{end}}
+{{end}}
+
 <script type="text/javascript">
 var pswpElement = document.querySelectorAll('.pswp')[0];
 var photos = document.querySelectorAll('.markdown>p>img');
-var items = [];
+var items = {{$scratch.Get "imagedata"}};;
 var isphotoloaded = false;
 var garelly;
 photos.forEach(function(photo){
@@ -9,23 +24,6 @@ photo.setAttribute("style","display:none;");
 photo.setAttribute("data-src",photo.getAttribute("src"));
 });
 
-
-
-var updatephoto = function(photo,item,callback){
-  if(photo.getAttribute("isloaded")==true){
-    callback();
-  }else{
-    photo.intervalid = setInterval(function () {
-      if (photo.naturalWidth>0 && photo.naturalHeight>0) {
-        item.w = photo.naturalWidth;
-        item.h = photo.naturalHeight;
-        photo.setAttribute("isloaded",true);
-        clearInterval(photo.intervalid);
-        callback();
-      }
-    }, 20);
-  }
-}
 
 var updateattributes = function(dom,attributes){
   attributes.forEach(function(att){
@@ -35,16 +33,32 @@ var updateattributes = function(dom,attributes){
 var initgallery = function(photos,items){
 // build items array
   var pid = 0;
+  var works_header = document.querySelector('a.image.article-header');
+  var header_image = works_header.querySelector('div img');
+  if(works_header&&header_image){
+    var myitem =items.filter(item=> item.src.split("/").pop()==header_image.src.split("/").pop())[0];
+    if(myitem){
+    myitem.index=pid;
+    works_header.setAttribute('data-gallery-index',pid);
+    pid++;
+    }
+  }
+
   photos.forEach(function(photo){
     photo.setAttribute('isloaded',false);
+    var photofile = photo.getAttribute("data-src");
     var patharr = photo.getAttribute("data-src").split('/');
-    var thumfile = `${patharr.slice(0,patharr.length-1).join('/')}/thum_${patharr[patharr.length-1]}`;
     var anch = document.createElement("A");
     updateattributes(anch,[
-      {key:'href',val:'photo.getAttribute("data-src")'},
+      {key:'href',val:photofile},
       {key:'class',val:'photo-container'},
       {key:'data-gallery-index',val:pid}
     ]);
+    var myitem = items.filter(item=> item.src.split("/").pop()==photofile.split("/").pop())[0];
+    if(myitem){
+    myitem.index = pid;
+    var thumfile =myitem.msrc;
+    if(!thumfile){thumfile = photofile}
     var thumimg = document.createElement("IMG");
     updateattributes(thumimg,[
       {key:'src',val:thumfile},
@@ -54,17 +68,19 @@ var initgallery = function(photos,items){
     pid++;
     anch.appendChild(thumimg);
     photo.parentElement.insertBefore(anch,photo);
-    items.push(
-      {
-        msrc :thumfile,
-        src: photo.getAttribute("data-src"),
-         w: photo.naturalWidth,
-         h: photo.naturalHeight
-      });
-
-    var options = {};
-    // photo.setAttribute("src","about:blank");//prevent from loading
+    // photo.parentElement.removeChild(photo);
+    photo.setAttribute("src","about:blank");//prevent from loading
+    }
   });
+  items = items.filter(item=>(item.index>=0));
+  items.sort(function(a,b){
+    return a.index - b.index;
+  });
+  if(works_header&&header_image){
+    works_header.items = items;
+  }
+  return items;
+  console.log(items)
 }
 
 // Initializes and opens PhotoSwipe
@@ -72,21 +88,16 @@ var openPhotoSwipe = function(index,items){
   options={};
   var i =  parseInt(index,10);
   options.index =i;
-  updatephoto(photos[i],items[i],function(){ // wait for loaded
-    gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-    gallery.listen('gettingData', function(index, item) {
-    // index - index of a slide that was loaded
-    // item - slide object
-    updatephoto(photos[index],item,function(){return});
-    });
-    gallery.init();
+  gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
 
-  });
+  gallery.init();
+
+
 
 };
 var onThumbnailsClick = function(e) {
   e.preventDefault();
-  var eTarget = e.target;
+  var eTarget = e.target.closest('a.image.article-header, a.photo-container');
   var index = eTarget.getAttribute('data-gallery-index');
   if(index>=0){
     openPhotoSwipe(index,eTarget.items);
@@ -116,9 +127,9 @@ var photoswipeParseHash = function() {
 };
 
 document.addEventListener("DOMContentLoaded", function(){
-  initgallery(photos,items);
-  document.querySelectorAll('.photo-container').forEach(function(anch2){
-    anch2.firstChild.items = items;
+  items = initgallery(photos,items);
+  document.querySelectorAll('a.image.article-header, a.photo-container').forEach(function(anch2){
+    anch2.items = items;
     anch2.addEventListener("click",onThumbnailsClick);
   });
   var hashData = photoswipeParseHash();
