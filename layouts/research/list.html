@@ -2,7 +2,7 @@
 <div id="inner">
   <div id="list-wrap">
     <h1>Research</h1>
-    {{$categories := (slice "thesis" "journals" "proceedings")}}
+    {{$categories := (slice "thesis" "journals" "proceedings" "presentation")}}
     {{$pages := .Pages}}
     {{range $categories}}
       {{$mypages := (where $pages ".Params.category" .)}}

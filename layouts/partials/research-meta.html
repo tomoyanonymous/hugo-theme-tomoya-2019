@@ -41,6 +41,9 @@
 
 
 <meta name="citation_abstract_html_url" content="{{.Permalink}}">
+{{with .Params.abstract}}
+<meta name="abstract" content="{{.}}">
+{{end}}
 
 {{with .Params.fulltext_html_url}}
 <meta name="citation_fulltext_html_url" content="{{.}}">

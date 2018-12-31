@@ -20,6 +20,11 @@
 <h1>Authors</h1>
 {{delimit .Params.authors ", "}}
 
+{{ with .Params.pdf_url }}
+<h1>PDF</h1>
+<a href="{{.}}" ><em>Download PDF</em></a>
+{{end}}
+
 
 {{ with .Params.bibtex }}
 <h1>Bibtex</h1>
