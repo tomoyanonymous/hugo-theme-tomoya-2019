@@ -171,8 +171,11 @@ body{
       list-style-position: outside;
       margin-left: 1.5em;
       li{
-        margin-bottom:0.5em;
+        margin-bottom:1em;
         line-height:1.35em;
+        p{
+          margin:0;
+        }
       }
     }
     p#bibtex{
