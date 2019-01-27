@@ -5,7 +5,7 @@
   <p class="title">{{ .Title }}</p>
   <p class="authors">{{delimit .Params.authors ", "}}</p>
   <p class="journal">{{with .Params.journal_title}}{{.}}{{else}}{{.Params.conference_title}}{{end}}</p>
-  <p class="publishdate">{{.PublishDate.Format "2006-01-01"}}
+  <p class="publishdate">{{.PublishDate.Format "2006-01-02"}}
     {{if (eq .Params.reviewed true)}}<span class="reviewed">Reviewed</span>{{end}}
     {{if .Params.pdf_url}}<span class="pdf">PDF</span>{{end}}
   </p>
