@@ -1,6 +1,7 @@
 <div id="profile">
   <a href="{{"about"|relLangURL}}" class="hover-invert">
   {{range (where .Site.Pages "Section" "about")}}
+  {{if .Params.shortprofile}}
   {{ $icon := ((.Resources.GetMatch "profile2.jpg").Fill "150x150") }}
   <div class="icon">
     <img src="{{$icon.RelPermalink}}" alt="">
@@ -8,13 +9,10 @@
   <div class="text">
     <p class="name ">{{.Params.name}}</p>
   <p class="profile">
-    {{if .Params.shortprofile}}
     {{.Params.shortprofile}}
-    {{else}}
-    {{.Summary}}
-    {{end}}
   </p>
   </div>
+  {{end}}
   {{end}}
 </a>
 
