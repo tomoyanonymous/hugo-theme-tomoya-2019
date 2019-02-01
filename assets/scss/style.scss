@@ -165,6 +165,9 @@ body{
       a.photo-container:hover{
         background:transparent;
       }
+      sup.footnote-ref{
+        vertical-align: sub;
+      }
     }
     ul,ol{
       font-size: 1rem;
