@@ -1,6 +1,6 @@
 {{$scratch := newScratch}}
 {{$page :=.Page }}
-{{with .Resources.ByType "image"}}
+{{with .Resources.ByType "image"}} 
   {{range .}}
   {{if (and (ne .MediaType.SubType "gif") (ne .MediaType.SubType "svg") )}}
   {{$scratch.Set "ipath" "content/"}}
