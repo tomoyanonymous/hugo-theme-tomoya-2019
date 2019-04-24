@@ -3,7 +3,7 @@
 html,:root{
   width:100%;
   font-size:15px;
-  background-color:$main2*0.94;
+  background-color:$bg;
   font-weight:500;
 }
 body{
@@ -11,7 +11,7 @@ body{
   width:100%;
   min-width: 375px;
   letter-spacing: 0.12rem;
-  background-color:$main2*0.94;
+  background-color:$bg;
   color:$main1;
   list-style-position: inside;
   word-wrap: break-word;
@@ -21,7 +21,6 @@ body{
   }
   a{
     color:$main3;
-    border-bottom:0px $main2*0.9;
     &:hover{
       text-decoration: none;
       img{
@@ -34,7 +33,7 @@ body{
   }
 }
 hr{
-  border-top:1px dotted $main2*0.8;
+  border-top:1px dotted $line;
 }
 h1,h2,h3,h4,h5,h6{
   font-weight:normal;

@@ -32,7 +32,7 @@ header{
     }
 
     .menu{
-      background-color: $main2*0.94;
+      background-color: $bg;
       z-index:99;
       font-size: 90%;
       right:80px;
@@ -43,7 +43,7 @@ header{
       }
     .locales{
       z-index:99;
-      background-color: $main2*0.94;
+      background-color: $bg;
       font-size: 80%;
       right:30px;
       a{

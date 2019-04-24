@@ -95,8 +95,8 @@ body{
     overflow-y: hidden;
     margin:12px auto;
     position: relative;
-    border-top:1px dotted $main2*0.8;
-    border-bottom:1px dotted $main2*0.8;
+    border-top:1px dotted $line;
+    border-bottom:1px dotted $line;
 
     // background-color: $main1;
     p{
@@ -155,7 +155,6 @@ body{
       em{
         display: block;
         font-size:0.9rem;
-        color:$main1+#222;
         margin-bottom :-15px;
       }
       a:hover{
@@ -197,7 +196,7 @@ body{
       padding:0.1px 10px;
       // border:2px solid $main2*0.7;
       background:linear-gradient(90deg,rgba(232, 243, 247,255) 25%, rgba(225, 234, 237,0) 70%);
-      color:$main2*0.5;
+      color:$main3;
       font-family: "游明朝体", "YuMincho", "游明朝", "Yu Mincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "HGS明朝E", "ＭＳ Ｐ明朝", "MS PMincho", serif;
     }
   }
