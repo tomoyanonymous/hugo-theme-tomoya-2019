@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="{{ $style.Permalink }}">
   {{ partialCached "photoswipe-head.html" .}}
 
-  {{ partial "meta.html" . }}
+  {{- partial "meta.html" . -}}
   <title>{{if .Title}}{{ .Title }} | {{end}}Matsuura Tomoya|松浦知也</title>
 </head>
 {{ end }}

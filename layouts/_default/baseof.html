@@ -3,16 +3,16 @@
 
 {{ block "head" .}}
   <head>
-  {{ $sass := resources.Get "scss/style.scss" }}
-  {{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
-  {{ $style := $sass | resources.ToCSS $options }}
+  {{- $sass := resources.Get "scss/style.scss" -}}
+  {{- $options := (dict "targetPath" "style.css" "enableSourceMap" true) -}}
+  {{- $style := $sass | resources.ToCSS $options -}}
   <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   {{if .Params.highlight}}
   <link rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
   {{end}}
-  {{ partial "meta.html" . }}
+  {{- partial "meta.html" . -}}
   <title>{{if .Title}}{{ .Title }} - {{end}}Matsuura Tomoya|松浦知也</title>
 </head>
 {{ end }}

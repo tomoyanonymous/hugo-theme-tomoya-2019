@@ -1,0 +1,30 @@
+{{$description:= $.Site.Params.description}}
+
+{{if .Description}}
+{{$description = .Description}}
+{{else if .Summary}}
+{{$description = .Summary}}
+{{ end }}
+
+{{.Scratch.Set "ogpimage" $.Site.Params.ogpimage}}
+{{.Scratch.Set "ogpx" "1200"}}
+{{.Scratch.Set "ogpy" 630}}
+
+
+{{if .Params.ogpimage}}
+  {{.Scratch.Set "ogpimage" (.Params.ogpimage)}}
+  {{.Scratch.Set "hasthum" true}}
+{{else}}
+  {{with .Resources.ByType "image"}}
+    {{range first 1 .}}
+      {{if (or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "png") )}}
+    {{$image := .Resize "1200x" }}
+        {{$.Page.Scratch.Set "ogpimage" $image.Permalink }}
+        {{$.Page.Scratch.Set "tempogpimage" $image.Permalink }}
+        {{$.Page.Scratch.Set "ogpx" $image.Width}}
+        {{$.Page.Scratch.Set "ogpy" $image.Height}}
+        {{$.Page.Scratch.Set "hasthum" true}}
+    {{end}}
+    {{end}}
+  {{end}}
+{{end}}

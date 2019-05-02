@@ -48,6 +48,7 @@ body{
         span{
           display: block;
           padding:10px;
+          color:rgba(0,0,0,0);
         }
       }
       span.titlestring{
@@ -57,7 +58,8 @@ body{
         bottom: 0;
         width: 100%;
         margin:0 auto;
-        color:$main4;
+        color: $main4;
+        z-index: 99 ;
         &:hover{
           color:$main4;
         }
@@ -97,15 +99,13 @@ body{
     position: relative;
     border-top:1px dotted $line;
     border-bottom:1px dotted $line;
-
-    // background-color: $main1;
     p{
       position: absolute;
       width: 100%;
       bottom:0;
       left:0;
       font-size:1.5em;
-      background:linear-gradient(90deg,rgba(225, 234, 237,255) 30%, rgba(225, 234, 237,0) 80%);
+      background:linear-gradient(90deg,$main2 30%, rgba(225, 234, 237,0) 80%);
     }
     .image{
       position: absolute;
@@ -137,7 +137,7 @@ body{
   background-color: $main1;
   color:$main5;
 }
-  #list-wrap>a:hover{
+  .list-wrap>a:hover{
       color: $main5;
       p.title{
         background:linear-gradient(to right,$main1 30%, rgba(225, 234, 237,0) 80%);
@@ -200,8 +200,9 @@ body{
       font-family: "游明朝体", "YuMincho", "游明朝", "Yu Mincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN W3", HiraMinProN-W3, "ヒラギノ明朝 ProN", "Hiragino Mincho ProN", "ヒラギノ明朝 Pro", "Hiragino Mincho Pro", "HGS明朝E", "ＭＳ Ｐ明朝", "MS PMincho", serif;
     }
   }
+
 }
-#inner #list-wrap,#inner.flex, #gallery{
+#inner .list-wrap{
   // max-width:960+2*3px;
   min-width:370px;
   padding:30px 30px;
@@ -266,7 +267,7 @@ body{
       background:linear-gradient(to right,$main1 30%, rgba(225, 234, 237,0) 80%);
       color:$main5;
   }
-  @media (max-width: 660px) {
+  @media (max-width: $breakpoint-header){
     a article.thumbnail{
       width:150px;
       height:150px;
@@ -293,6 +294,8 @@ body{
   #gallery-wrap{
     margin-bottom:30px;
     max-height: 300px;
+    max-width: 1000px;
+    margin: 0 auto;
     overflow-y: hidden;
   }
   #gallery{
@@ -335,7 +338,7 @@ body{
 
   }
   #gallery,#news,#profile,#blog{
-    padding: 0 30px;
+    padding: 0 3%;
     margin:0 auto;
     margin-bottom: 30px;
     p.index{
@@ -408,6 +411,7 @@ body{
   margin:0 auto;
   margin-bottom: 30px;
   position: relative;
+  font-size: 14px;
   >div{
     height:100%;
     a:hover{
@@ -416,7 +420,7 @@ body{
     }
     a,span,.number{
       display: block;
-      width:45px;
+      min-width:45px;
       padding:10px;
       margin:3px 0;
       text-align: center;
@@ -425,7 +429,6 @@ body{
   .to_next ,.to_prev{
     width:40%;
     height:100%;
-    // min-width: 240px;
     a{
       width:100%;
       height:100%;
@@ -464,4 +467,10 @@ body{
     }
   }
 }
+}
+
+@media (max-width: $breakpoint-header){
+  body #outer #inner .markdown{
+    padding: 60px 3%;
+  }
 }

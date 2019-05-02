@@ -1,9 +1,11 @@
 {{$header:=""}}
-{{with (.Scratch.Get "ogpimage")}}
-{{$header = .}}
-{{end}}
-{{with .Params.thum}}
-{{$header = .}}
+{{if (.Scratch.Get "hasthum")}}
+  {{with (.Scratch.Get "ogpimage")}}
+    {{$header = .}}
+  {{end}}
+  {{with .Params.thum}}
+    {{$header = .}}
+  {{end}}
 {{end}}
 
 <a href="{{$header}}" class="image article-header blog">

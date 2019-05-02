@@ -1,23 +1,25 @@
 header{
-    position: relative;
-    height:100px;
+    margin: 30px auto;
+    padding: 0 30px ;
+    display: flex;
+    justify-content: flex-start;
+    max-height: 100px;
+    overflow: hidden;
     .sitetitle, .menu , .locales{
       transition: 0.15s ease-out;
-      display:flex;
-      height:100%;
-      position: absolute;
+      height: 100%;
       a{
-        line-height:70px;
+        line-height: 70px;
+        display: inline-block;
       }
       a:hover{
-          color:$main5;
+          color: $main5;
           background-color: $main1;
       }
 
     }
     .sitetitle{
       top:0;
-      left:30px;
       width:200px;
     }
     a{
@@ -32,12 +34,11 @@ header{
     }
 
     .menu{
+      margin-left: auto;
       background-color: $bg;
       z-index:99;
       font-size: 90%;
-      right:80px;
       a{
-        // width:70px;
         padding:0 10px;
         }
       }
@@ -45,7 +46,7 @@ header{
       z-index:99;
       background-color: $bg;
       font-size: 80%;
-      right:30px;
+      margin-left: 10px;
       a{
         width: 50px;
       }
@@ -55,13 +56,13 @@ header{
   }
   #nav-open{
     z-index:999;
+    align-self: flex-end;
     position: absolute;
     transform:translateY(-70px);
     margin: 0 auto;
     right:30px;
     top: 50-15px;
     display: block;
-    vertical-align: middle;
     cursor: pointer;
     color:$main3;
 
@@ -84,33 +85,41 @@ header{
     text-align: center;
     transform:scaleX(1.5);
     transition: 0.15s ease-out;
+    align-self: flex-end;
 
 }
-
 }
-
 $breakpoint-header: 676px;
 @media (max-width: $breakpoint-header) {
   header{
-    .menu{
-      // margin-top: 70px;
-    }
+    display: block;
+    z-index: 999;
+    padding: 0 3%;
     .menu,.locales{
-      position: relative;
+      position: absolute;
       top:auto;
       bottom:auto;
-      left:auto;
-      right:auto;
+      left:0;
+      right:0;
       flex-wrap: wrap;
       height:auto;
+      z-index: 999;
+      width:100%;
+      margin: auto;
       transform:translateY(-450px);
       a{
-        min-width:100%;
+        position: relative;
         height:50px;
+        width:100%;
         line-height: 50px;
       }
+ 
     }
-      #nav-open{
+
+    .locales{
+      margin-top: 300px; 
+    }
+    #nav-open{
       transform:translateX(0%);
     }
 
@@ -123,7 +132,9 @@ $breakpoint-header: 676px;
 
   }
   #nav-input:checked~ div{
-      transform:translateY(100px);
+      transform:translateY(0px);
       // font-size: 500%;
+      z-index: 999;
+
   }
 }

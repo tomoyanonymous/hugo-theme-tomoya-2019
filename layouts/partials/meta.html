@@ -1,32 +1,34 @@
-  {{$description:= $.Site.Params.description}}
+{{- $description:= $.Site.Params.description -}}
 
-  {{if .Description}}
-  {{$description = .Description}}
-  {{else if .Summary}}
-  {{$description = .Summary}}
-  {{ end }}
+{{- if .Description -}}
+{{- $description = .Description -}}
+{{- else if .Summary -}}
+{{- $description = .Summary -}}
+{{- end -}}
 
-  {{.Scratch.Set "ogpimage" (path.Join $.Site.BaseURL $.Site.Params.ogpimage)}}
-  {{.Scratch.Set "ogpx" "1200"}}
-  {{.Scratch.Set "ogpy" 630}}
+{{- .Scratch.Set "ogpimage" $.Site.Params.ogpimage -}}
+{{- .Scratch.Set "ogpx" "1200" -}}
+{{- .Scratch.Set "ogpy" 630 -}}
 
 
-  {{if .Params.ogpimage}}
-    {{.Scratch.Set "ogpimage" (path.Join .Permalink .Params.ogpimage)}}
-  {{else}}
-    {{with .Resources.ByType "image"}}
-      {{range first 1 .}}
-        {{if (or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "png") )}}
-      {{$image := .Resize "1200x" }}
-          {{$.Page.Scratch.Set "ogpimage" $image.Permalink }}
-          {{$.Page.Scratch.Set "ogpx" $image.Width}}
-          {{$.Page.Scratch.Set "ogpy" $image.Height}}
-      {{end}}
-      {{end}}
-    {{end}}
-  {{end}}
-
-    <meta charset="utf-8">
+{{- if .Params.ogpimage -}}
+  {{- .Scratch.Set "ogpimage" (.Params.ogpimage) -}}
+  {{- .Scratch.Set "hasthum" true -}}
+{{- else -}}
+  {{- with .Resources.ByType "image" -}}
+    {{- range first 1 . -}}
+      {{- if (or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "png") ) -}}
+    {{- $image := (.Resize "1200x") -}}
+        {{- $.Page.Scratch.Set "ogpimage" $image.Permalink -}}
+        {{- $.Page.Scratch.Set "tempogpimage" $image.Permalink -}}
+        {{- $.Page.Scratch.Set "ogpx" $image.Width -}}
+        {{- $.Page.Scratch.Set "ogpy" $image.Height -}}
+        {{- $.Page.Scratch.Set "hasthum" true -}}
+    {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="keyword" content="松浦知也,Matsuura Tomoya,{{with .Keywords}}{{.}}{{end}}">
@@ -39,14 +41,14 @@
     <meta property="twitter:creator" content="@tomoya_nonymous">
     <meta property="twitter:creator:id" content="@tomoya_nonymous">
     <meta property="og:url" content="{{.Permalink}}" />
-    <meta property="og:image" content="{{.Scratch.Get "ogpimage"}}" />
-    <meta property="twitter:image" content="{{.Scratch.Get "ogpimage"}}" />
+    <meta property="og:image" content='{{.Scratch.Get "ogpimage" | absURL}}' />
+    <meta property="twitter:image" content='{{.Scratch.Get "ogpimage" | absURL}}' />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="{{.Scratch.Get "ogpx"}}" />
-    <meta property="og:image:height" content="{{.Scratch.Get "ogpy"}}" />
+    <meta property="og:image:width" content='{{.Scratch.Get "ogpx"}}' />
+    <meta property="og:image:height" content='{{.Scratch.Get "ogpy"}}' />
     <meta property="fb:app_id" content="1756749324544053" />
     <meta property="og:description" content="{{$description}}"/>
   <link rel="shortcut icon" href="/assets/img/favicon.ico">
   <link rel="canonical" href="{{.Permalink}}">
-  {{with .NextInSection}}<link rel="next" href="{{.}}">{{end}}
-  {{with .PrevInSection}}<link rel="prev" href="{{.}}">{{end}}
+  {{- with .NextInSection -}}<link rel="next" href="{{.Permalink}}">{{- end -}}
+  {{- with .PrevInSection -}}<link rel="prev" href="{{.Permalink}}">{{- end -}}
