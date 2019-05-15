@@ -337,7 +337,7 @@ body{
   }
 
   }
-  #gallery,#news,#profile,#blog{
+  #gallery,#news,#profile,#blog,#nippou{
     padding: 0 3%;
     margin:0 auto;
     margin-bottom: 30px;
@@ -345,9 +345,15 @@ body{
       font-size:1.5rem;
     }
   }
-  #news,#profile,#blog{
+  #news,#profile,#blog,#nippou{
     max-width:1000px;
     font-size: 1rem;
+  }
+  #nippou{
+    font-size:8pt;
+    h3{
+      margin:10px 0;
+    }
   }
   #profile{
     a{

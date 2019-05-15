@@ -1,0 +1,10 @@
+{{ with .Site.GetPage "/nippou" }}
+
+<div id="nippou">
+    <a href="/nippou">
+        {{.Content|markdownify|truncate 400}}
+    </a>
+    
+</div>
+
+{{end}}
