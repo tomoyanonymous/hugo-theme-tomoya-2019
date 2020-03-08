@@ -1,6 +1,7 @@
   <div id="gallery-wrap">
       <div id="gallery">
-        {{ range  first 8 (where .Data.Pages "Section" "works" ) }}
+        {{ $pages := where site.RegularPages "Type" "in" "works" }}
+        {{ range  first 8 $pages }}
           {{partial "works/article-thum.html" .}}
         {{ end }}
       </div>

@@ -2,7 +2,7 @@
   <a href="{{"info" | relLangURL}}" >
 <p class="index hover-invert">latest update</p>
 </a>
-  {{ range  first 5 (where .Data.Pages "Section" "info" ) }}
+  {{ range  first 5 (where site.RegularPages "Type" "in" "info" ) }}
   <div>
     <a href="{{.RelPermalink | relLangURL}}" >
     <p class="hover-invert infolist">{{.Date.Format "2006-01-02"}} : {{.Title}}</p>
