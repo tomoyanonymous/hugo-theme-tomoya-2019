@@ -8,6 +8,7 @@ html,:root{
 }
 body{
   font-family:$master-font;
+  font-feature-settings: "palt" 1;
   width:100%;
   min-width: 375px;
   letter-spacing: 0.12rem;
