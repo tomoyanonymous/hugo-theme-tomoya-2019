@@ -6,7 +6,7 @@
     {{$pages := .Pages}}
     {{range $categories}}
       {{$mypages := (where $pages ".Params.category" .)}}
-      {{ if (len $mypages) gt 0}}
+      {{ if gt (len $mypages) 0}}
           <p class="category">{{humanize .}}</p>
           {{range $mypages}}
             {{ partial "research/article-thum.html" .}}
@@ -15,7 +15,7 @@
     {{end}}
 
     {{$others := (where $pages ".Params.category" "not in" $categories)}}
-    {{ if (len $others) gt 0}}
+    {{ if gt (len $others) 0}}
     <p class="category">Others(Informal Research/Random Writings)</p>
       {{range $others}}
         {{ partial "research/article-thum.html" .}}
