@@ -12,8 +12,6 @@
       {{if (isset .Params "ogpimage")}}
       {{$img := (.Resources.GetMatch .Params.ogpimage )}}
       <img src="{{($img.Fill "150x150").RelPermalink}}" alt="">
-      {{else}}
-      <img src="" alt="">
       {{end}}
     </div>
   </div>
