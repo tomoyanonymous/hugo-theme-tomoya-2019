@@ -7,7 +7,7 @@
 </div>
 <div class="tags">
 {{ range $name, $taxonomy := .Site.Taxonomies.tags }}
-<input type="checkbox" class ="tagselect" id="tag-{{$name}}" checked>
+<input type="checkbox" class ="tagselect" id="tag-{{$name}}" data-tagname="{{$name}}" checked>
 <label for="tag-{{$name}}" class ="tagselect-label" data-tagname="{{$name}}" >#{{$name|upper}}</label>
 <style>
   input#tag-{{$name}}:checked ~ label[data-tagname='{{$name}}']{
@@ -56,6 +56,9 @@
   });
 
   const filterItemsOr = (items, choices) => {
+    if(! items){
+      return false;
+    }
     var res = items.filter(item => choices.includes(item));
     return res.length > 0;
   };
@@ -95,20 +98,23 @@
   }
   artbutton.addEventListener("change", categoryListener);
   clientbutton.addEventListener("change", categoryListener);
-  const tagbuttons = document.querySelectorAll('label.tagselect-label');
+  
+  const tagbuttons = document.querySelectorAll('input.tagselect');
+  const buttonlabels = Array.from(document.querySelectorAll('label.tagselect-label'));
 
-  tagbuttons.forEach(but => {
-    but.addEventListener('change', e => {
-      var newtags = current_tags.slice();
-      if (e.target.checked) {
-        newtags.push(e.target.name);
-      } else {
-        newtags = newtags.filter(item => item != e.target.name);
-      }
-      console.log(newtags);
-      updateItems(iso.getItemElements(),getCurrentCategories(),newtags);
-    });
-  });
+  const buttonlistener =(e) => {
+    const buttonlabel = buttonlabels.filter(b => b.dataset.tagname == e.target.dataset.tagname)[0];
+    var newtags = current_tags.slice();
+    if (e.target.checked) {
+      newtags.push(buttonlabel.dataset.tagname);
+    } else {
+      newtags = newtags.filter(item => item != buttonlabel.dataset.tagname);
+    }
+    updateItems(iso.getItemElements(),getCurrentCategories(),newtags);
+    current_tags = newtags;
+  };
+  tagbuttons.forEach(b =>  b.addEventListener('change',buttonlistener));
+
   //  Initialize
   updateItems(elem_whole,categories_whole,tags_whole);
 
