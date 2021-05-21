@@ -23,9 +23,10 @@
       {{ partial "works/article-thum.html" .}}
     {{ end }}
   </div>
-  {{$masonry := resources.Get "/js/masonry.pkgd.js"}}
-    <script src="{{$masonry.Permalink}}"></script>
-    <script type="text/javascript">
+  {{$isotope := resources.Get "/js/isotope.pkgd.min.js"}}
+  <script src="{{$isotope.Permalink}}"></script>
+
+<script type="text/javascript">
 
 
   const elem_whole = Array.from(document.querySelectorAll("#inner>a.masonryelem"));
@@ -40,14 +41,17 @@
   const categories_whole = ['artwork', 'clientwork'];
 
   const container = document.querySelector('#inner');
-  const msnry = new Masonry(container, {
-    // itemSelector: '#inner>a.masonryelem',
-    columnWidth: 'a article.smallthumbnail',
-    gutter: 2,
+  const iso = new Isotope(container, {
+    itemSelector: '#inner>a.masonryelem',
     stagger: 30,
     transitionDuration: '0.2s',
     horizontalOrder: false,
-    fitWidth: true
+    sortBy : 'original-order' ,
+    masonry: {
+      columnWidth: 'a article.smallthumbnail',
+      gutter: 2,
+      fitWidth: true
+    }
     // initLayout: false
   });
 
@@ -63,31 +67,10 @@
       return filterItemsOr(newtags, _tags) && filterItemsOr(_category, newcategories)
     });
 
-    const compareNewAndOldItems = (cmp_fn) => {
-      return elem_whole.filter(el => {
-        const exist_current = current_items.includes(el);
-        const exist_new = filtered_items.includes(el);
-        return cmp_fn(exist_current, exist_new);
-      });
-    };
-    const append_elems = compareNewAndOldItems((e_current, e_new) => !e_current && e_new);
-    const deleting_elems = compareNewAndOldItems((e_current, e_new) => e_current && !e_new);
-
-    console.log(append_elems.length, deleting_elems.length);
-
-    if (append_elems.length > 0) {
-      append_elems.forEach(function (el) {
-        container.appendChild(el);
-      });
-      msnry.appended(append_elems);
-      msnry.reloadItems();
-    }
-    msnry.remove(deleting_elems);
-
-    setTimeout(()=>{
-      msnry.layout();
-    }, 500);
-
+    iso.arrange({
+      // item element provided as argument
+      filter: ( itemElem ) =>  filtered_items.includes(itemElem)
+    });
   }
 
   let artbutton = document.querySelector('#switchtoart');
@@ -108,7 +91,7 @@
   let current_tags = tags_whole;
 
   const categoryListener = (e) => {
-    updateItems(msnry.getItemElements(),getCurrentCategories(),current_tags);
+    updateItems(iso.getItemElements(),getCurrentCategories(),current_tags);
   }
   artbutton.addEventListener("change", categoryListener);
   clientbutton.addEventListener("change", categoryListener);
@@ -123,7 +106,7 @@
         newtags = newtags.filter(item => item != e.target.name);
       }
       console.log(newtags);
-      updateItems(msnry.getItemElements(),getCurrentCategories(),newtags);
+      updateItems(iso.getItemElements(),getCurrentCategories(),newtags);
     });
   });
   //  Initialize
