@@ -34,12 +34,15 @@ article.thumbnail.list{
   }
 }
 }
-#list-wrap>h1{
+#list-wrap>*{
   max-width:1000px;
   margin:0 auto;
 }
+#list-wrap>p{
+  margin: 10px auto;
+}
+
+
 #list-wrap p.category{
-  max-width:1000px;
-  margin:0 auto;
   font-size:1.5rem;
 }

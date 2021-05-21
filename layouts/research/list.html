@@ -2,6 +2,9 @@
 <div id="inner">
   <div id="list-wrap">
     <h1>Research</h1>
+
+      {{.Content}}
+
     {{$categories := (slice "thesis" "journals" "proceedings" "presentation")}}
     {{$pages := .Pages}}
     {{range $categories}}
