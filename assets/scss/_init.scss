@@ -48,7 +48,8 @@ td, th {
   border-style: solid;
 }
 sup,sub{
-  vertical-align:baseline;
+  // vertical-align:baseline;
+  font-size:12px;
 }
 sup{
   margin-right:3px;
