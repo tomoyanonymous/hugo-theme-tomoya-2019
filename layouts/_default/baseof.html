@@ -3,6 +3,7 @@
 
 {{ block "head" .}}
   <head>
+    {{ partialCached "tagmanager_head.html" .}}
   {{- $sass := resources.Get "scss/style.scss" -}}
   {{- $options := (dict "targetPath" "style.css" "enableSourceMap" true) -}}
   {{- $style := $sass | resources.ToCSS $options -}}
