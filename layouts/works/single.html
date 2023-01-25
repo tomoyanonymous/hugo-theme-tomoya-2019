@@ -4,7 +4,9 @@
   {{ $options := (dict "targetPath" "style.css" "enableSourceMap" true) }}
   {{ $style := $sass | resources.ToCSS $options }}
   <link rel="stylesheet" href="{{ $style.Permalink }}">
-  {{ partialCached "photoswipe-head.html" .}}
+  {{/* photoswipe is currently turned off for the simplicity
+    {{ partialCached "photoswipe-head.html" .}}
+  */}}
 
   {{- partial "meta.html" . -}}
   <title>{{if .Title}}{{ .Title }} | {{end}}Matsuura Tomoya|松浦知也</title>
