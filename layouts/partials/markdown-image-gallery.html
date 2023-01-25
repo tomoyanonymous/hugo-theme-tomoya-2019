@@ -1,152 +1,152 @@
 {{$scratch := newScratch}}
 {{$page :=.Page }}
-{{with .Resources.ByType "image"}} 
-  {{range .}}
-  {{if (and (ne .MediaType.SubType "gif") (ne .MediaType.SubType "svg") )}}
-  {{$scratch.Set "ipath" "content/"}}
+{{with .Resources.ByType "image"}}
+{{range .}}
+{{if (and (ne .MediaType.SubType "gif") (ne .MediaType.SubType "svg") )}}
+{{$scratch.Set "ipath" "content/"}}
 
-  {{$scratch.Add "ipath" $page.File.Dir}}
+{{$scratch.Add "ipath" $page.File.Dir}}
 
-  {{$scratch.Add "ipath" .Name}}
-  {{if (fileExists ($scratch.Get "ipath")) }}
-  {{$iconfig := (imageConfig ($scratch.Get "ipath"))}}
-  {{$thum := .Resize "640x" }}
-  {{$scratch.Add "imagedata" (slice (dict  "src" .RelPermalink "w" $iconfig.Width "h" $iconfig.Height "msrc" $thum.RelPermalink ))}}
-  {{end}}
-  {{end}}
-  {{end}}
+{{$scratch.Add "ipath" .Name}}
+{{if (fileExists ($scratch.Get "ipath")) }}
+{{$iconfig := (imageConfig ($scratch.Get "ipath"))}}
+{{$thum := .Resize "640x" }}
+{{$scratch.Add "imagedata" (slice (dict "src" .RelPermalink "w" $iconfig.Width "h" $iconfig.Height "msrc" $thum.RelPermalink ))}}
+{{end}}
+{{end}}
+{{end}}
 {{end}}
 
 <script type="text/javascript">
-var pswpElement = document.querySelectorAll('.pswp')[0];
-var photos = document.querySelectorAll('.markdown>p>img');
-var items = {{$scratch.Get "imagedata"}};;
-var isphotoloaded = false;
-var garelly;
+  let pswpElement = document.querySelectorAll('.pswp')[0];
+  let photos = document.querySelectorAll('.markdown>p>a>img');
+  let items = {{ $scratch.Get "imagedata"}};
 
-photos.forEach(function(photo){
-photo.setAttribute("data-src",photo.getAttribute("src"));
-if(photo.src.split(".").pop() != "svg" && photo.src.split(".").pop() != "gif"){
-photo.setAttribute("style","display:none;");
-photo.setAttribute("src","about:blank");//prevent from loading
-}
+  let isphotoloaded = false;
+  let garelly;
+  const israster = (str) => str.split(".").pop() != "svg" && str.split(".").pop() != "gif";
+  photos.forEach(function (photo) {
+    photo.setAttribute("data-src", photo.getAttribute("src"));
+    if (israster(photo.src)) {
+      photo.setAttribute("style", "display:none;");
+      photo.setAttribute("src", "about:blank");//prevent from loading
+    }
 
-});
-
-var updateattributes = function(dom,attributes){
-  attributes.forEach(function(att){
-    dom.setAttribute(att.key,att.val);
   });
-}
-var initgallery = function(photos,items){
-// build items array
-  var pid = 0;
-  var works_header = document.querySelector('a.image.article-header');
-  var header_image = works_header.querySelector('div img');
-  if(works_header&&header_image&&items){
-    var myitem =items.filter(item=> item.src.split("/").pop()==header_image.src.split("/").pop())[0];
-    if(myitem){
-    myitem.index=pid;
-    works_header.setAttribute('data-gallery-index',pid);
-    pid++;
+
+  const updateattributes = (dom, attributes) => {
+    attributes.forEach((att) => {
+      dom.setAttribute(att.key, att.val);
+    });
+  }
+  const initgallery = function (photos, items) {
+    // build items array
+    let pid = 0;
+    var works_header = document.querySelector('a.image.article-header');
+    var header_image = works_header.querySelector('div img');
+    if (works_header && header_image && items) {
+      var myitem = items.filter(item => item.src.split("/").pop() == header_image.src.split("/").pop())[0];
+      if (myitem) {
+        myitem.index = pid;
+        works_header.setAttribute('data-gallery-index', pid);
+        pid++;
+      }
+    }
+
+    photos.forEach((photo) => {
+      photo.setAttribute('isloaded', false);
+      var photofile = photo.getAttribute("data-src");
+      var patharr = photo.getAttribute("data-src").split('/');
+      var anch = document.createElement("A");
+      updateattributes(anch, [
+        { key: 'href', val: photofile },
+        { key: 'class', val: 'photo-container' },
+        { key: 'data-gallery-index', val: pid }
+      ]);
+      if (items) {
+        var myitem = items.filter(item => item.src.split("/").pop() == photofile.split("/").pop())[0];
+        if (myitem) {
+          myitem.index = pid;
+          var thumfile = myitem.msrc;
+          if (!thumfile) { thumfile = photofile }
+          var thumimg = document.createElement("IMG");
+          updateattributes(thumimg, [
+            { key: 'src', val: thumfile },
+            { key: 'alt', val: photo.alt },
+            { key: 'data-gallery-index', val: pid }
+          ]);
+          pid++;
+          anch.appendChild(thumimg);
+          photo.parentElement.insertBefore(anch, photo);
+
+          // photo.parentElement.removeChild(photo);
+        }
+      }
+    });
+    if (items) {
+      items = items.filter(item => (item.index >= 0));
+      items.sort(function (a, b) {
+        return a.index - b.index;
+      });
+    }
+    if (works_header && header_image && items) {
+      works_header.items = items;
+    }
+
+    return items;
+  }
+
+  // Initializes and opens PhotoSwipe
+  const openPhotoSwipe = (index, items) => {
+    options = {};
+    var i = parseInt(index, 10);
+    options.index = i;
+    gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+
+    gallery.init();
+  };
+  const onThumbnailsClick = (e) => {
+    e.preventDefault();
+    var eTarget = e.target.closest('a.image.article-header, a.photo-container');
+    var index = eTarget.getAttribute('data-gallery-index');
+    if (index >= 0) {
+      openPhotoSwipe(index, eTarget.items);
     }
   }
-
-  photos.forEach(function(photo){
-    photo.setAttribute('isloaded',false);
-    var photofile = photo.getAttribute("data-src");
-    var patharr = photo.getAttribute("data-src").split('/');
-    var anch = document.createElement("A");
-    updateattributes(anch,[
-      {key:'href',val:photofile},
-      {key:'class',val:'photo-container'},
-      {key:'data-gallery-index',val:pid}
-    ]);
-    if(items){
-    var myitem = items.filter(item=> item.src.split("/").pop()==photofile.split("/").pop())[0];
-  }
-    if(myitem){
-    myitem.index = pid;
-    var thumfile =myitem.msrc;
-    if(!thumfile){thumfile = photofile}
-    var thumimg = document.createElement("IMG");
-    updateattributes(thumimg,[
-      {key:'src',val:thumfile},
-      {key:'alt',val:photo.alt},
-      {key:'data-gallery-index',val:pid}
-    ]);
-    pid++;
-    anch.appendChild(thumimg);
-    photo.parentElement.insertBefore(anch,photo);
-    // photo.parentElement.removeChild(photo);
-    }
-  });
-  if(items){
-  items = items.filter(item=>(item.index>=0));
-  items.sort(function(a,b){
-    return a.index - b.index;
-  });
-  }
-  if(works_header&&header_image&&items){
-    works_header.items = items;
-  }
-  return items;
-  console.log(items)
-}
-
-// Initializes and opens PhotoSwipe
-var openPhotoSwipe = function(index,items){
-  options={};
-  var i =  parseInt(index,10);
-  options.index =i;
-  gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
-
-  gallery.init();
-
-
-
-};
-var onThumbnailsClick = function(e) {
-  e.preventDefault();
-  var eTarget = e.target.closest('a.image.article-header, a.photo-container');
-  var index = eTarget.getAttribute('data-gallery-index');
-  if(index>=0){
-    openPhotoSwipe(index,eTarget.items);
-  }
-}
-var photoswipeParseHash = function() {
-    var hash = window.location.hash.substring(1),
-    params = {};
-    if(hash.length < 5) {
-        return params;
+  const photoswipeParseHash = () => {
+    var hash = window.location.hash.substring(1);
+    let params = {};
+    if (hash.length < 5) {
+      return params;
     }
     var vars = hash.split('&');
     for (var i = 0; i < vars.length; i++) {
-        if(!vars[i]) {
-            continue;
-        }
-        var pair = vars[i].split('=');
-        if(pair.length < 2) {
-            continue;
-        }
-        params[pair[0]] = pair[1];
+      if (!vars[i]) {
+        continue;
+      }
+      var pair = vars[i].split('=');
+      if (pair.length < 2) {
+        continue;
+      }
+      params[pair[0]] = pair[1];
     }
-    if(params.gid) {
-        params.gid = parseInt(params.gid, 10);
+    if (params.gid) {
+      params.gid = parseInt(params.gid, 10);
     }
     return params;
-};
+  };
 
-document.addEventListener("DOMContentLoaded", function(){
-  items = initgallery(photos,items);
-  document.querySelectorAll('a.image.article-header, a.photo-container').forEach(function(anch2){
-    anch2.items = items;
-    anch2.addEventListener("click",onThumbnailsClick);
-  });
-  var hashData = photoswipeParseHash();
-  if(hashData.pid && hashData.gid) {
-    // updategallery(photos,items);
-    openPhotoSwipe( hashData.pid , items );
-  }
-})
+  document.addEventListener("DOMContentLoaded", () => {
+    items = initgallery(photos, items);
+    document.querySelectorAll('a.image.article-header, a.photo-container').forEach((anch2) => {
+      anch2.items = items;
+      anch2.addEventListener("click", onThumbnailsClick);
+
+    });
+    const hashData = photoswipeParseHash();
+    if (hashData.pid && hashData.gid) {
+      // updategallery(photos,items);
+      openPhotoSwipe(hashData.pid, items);
+    }
+  })
 </script>

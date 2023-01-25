@@ -1,0 +1,36 @@
+{{$img := .Page.Resources.GetMatch  .Destination  }}
+
+{{ if $img}}
+    <p style="text-align:center;">
+    {{ if eq $img.MediaType.MainType "image"}}
+
+        {{ if and (ne $img.MediaType.SubType "svg") (ne $img.MediaType.SubType "gif")}}
+
+            {{ if gt (float $img.Width) 640 }}
+                {{$thumbnail :=  $img.Resize "640x" }}
+
+                <a href="{{.Destination | safeURL}}">
+                    <img src="{{$thumbnail.RelPermalink}}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}" {{ end }} />
+                </a>
+            {{ else }}
+
+            <a href="{{.Destination | safeURL}}" >
+            <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}" {{ end }}/>
+            </a>
+
+            {{ end }}
+
+        {{ else }}
+
+            <a href="{{.Destination | safeURL}}">
+                <img src="{{ .Destination | safeURL }}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}" {{ end }} />
+            </a>
+
+        {{ end }}
+
+    {{ end }}
+
+    </p>
+{{else}}
+
+{{end}}
