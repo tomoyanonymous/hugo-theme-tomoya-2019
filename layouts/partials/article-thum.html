@@ -2,9 +2,9 @@
   <a href="{{.Permalink}}" class = "masonryelem" data-category="{{.Params.category}}" data-tags="{{with .Params.tags }}{{ delimit . " " }}{{end}}">
 <article class="thumbnail list">
   {{if (isset .Params "thum")}}
-    <div class="image"><img src="{{((.Resources.GetMatch .Params.thum).Resize "800x").Permalink}}" alt=""></div>
+    <div class="image"><img src="{{((.Resources.GetMatch .Params.thum).Resize "300x webp").Permalink}}" width="300" height="300" alt=""></div>
   {{else if (isset .Params "ogpimage")}}
-  <div class="image"><img src="{{((.Resources.GetMatch .Params.ogpimage).Resize "800x").Permalink}}" alt=""></div>
+  <div class="image"><img src="{{((.Resources.GetMatch .Params.ogpimage).Resize "300x webp").Permalink}}" alt=""></div>
 {{else}}
 <div class="image"></div>
 

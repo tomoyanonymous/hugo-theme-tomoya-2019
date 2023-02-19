@@ -7,7 +7,7 @@
         {{ if and (ne $img.MediaType.SubType "svg") (ne $img.MediaType.SubType "gif")}}
 
             {{ if gt (float $img.Width) 640 }}
-                {{$thumbnail :=  $img.Resize "640x" }}
+                {{$thumbnail :=  $img.Resize "640x webp" }}
 
                 <a href="{{.Destination | safeURL}}">
                     <img src="{{$thumbnail.RelPermalink}}" alt="{{ .Text }}" {{ with .Title}} title="{{ . }}" {{ end }} />

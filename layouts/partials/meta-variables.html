@@ -18,7 +18,7 @@
   {{with .Resources.ByType "image"}}
     {{range first 1 .}}
       {{if (or (eq .MediaType.SubType "jpg") (eq .MediaType.SubType "png") )}}
-    {{$image := .Resize "1200x" }}
+    {{$image := .Resize "1200x webp" }}
         {{$.Page.Scratch.Set "ogpimage" $image.Permalink }}
         {{$.Page.Scratch.Set "tempogpimage" $image.Permalink }}
         {{$.Page.Scratch.Set "ogpx" $image.Width}}

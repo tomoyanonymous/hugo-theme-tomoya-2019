@@ -11,7 +11,7 @@
     <div class="image">
       {{if (isset .Params "ogpimage")}}
       {{$img := (.Resources.GetMatch .Params.ogpimage )}}
-      <img src="{{($img.Fill "150x150").RelPermalink}}" alt="">
+      <img src="{{($img.Fill "150x150 q90 webp").RelPermalink}}" alt="">
       {{end}}
     </div>
   </div>

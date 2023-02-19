@@ -10,7 +10,7 @@
 {{$scratch.Add "ipath" .Name}}
 {{if (fileExists ($scratch.Get "ipath")) }}
 {{$iconfig := (imageConfig ($scratch.Get "ipath"))}}
-{{$thum := .Resize "640x" }}
+{{$thum := .Resize "640x webp" }}
 {{$scratch.Add "imagedata" (slice (dict "src" .RelPermalink "w" $iconfig.Width "h" $iconfig.Height "msrc" $thum.RelPermalink ))}}
 {{end}}
 {{end}}

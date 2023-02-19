@@ -2,7 +2,7 @@
   <a href="{{"about"|relLangURL}}" class="hover-invert">
   {{range (where .Site.Pages "Section" "about")}}
   {{if .Params.shortprofile}}
-  {{ $icon := ((.Resources.GetMatch "profile2.jpg").Fill "150x150") }}
+  {{ $icon := ((.Resources.GetMatch "profile2.jpg").Fill "150x150 q90 webp") }}
   <div class="icon">
     <img src="{{$icon.RelPermalink}}" alt="">
   </div>
