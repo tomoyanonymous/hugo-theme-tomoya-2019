@@ -19,7 +19,7 @@
 
     {{$others := (where $pages ".Params.category" "not in" $categories)}}
     {{ if gt (len $others) 0}}
-    <p class="category">Others(Informal Research/Random Writings)</p>
+    <p class="category">Others (Reviews / Informal Research / Random Writings)</p>
       {{range $others}}
         {{ partial "research/article-thum.html" .}}
       {{end}}
